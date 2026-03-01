@@ -41,8 +41,12 @@ jobs:
           Copy-Item -Recurse fonts     dist\JRGS\fonts     -Force
           Copy-Item -Recurse ICON      dist\JRGS\ICON      -Force
           Copy-Item -Recurse Emulators dist\JRGS\Emulators -Force
-          Copy-Item CHANGELOG.md       dist\JRGS\          -Force
-          Copy-Item README.md          dist\JRGS\          -Force
+
+          # Emulators 폴더 내 ZIP 파일 자동 압축 해제 후 삭제
+          Get-ChildItem -Path dist\JRGS\Emulators -Recurse -Filter *.zip | ForEach-Object {
+            Expand-Archive -Path $_.FullName -DestinationPath $_.DirectoryName -Force
+            Remove-Item $_.FullName
+          }
 
           # 사용자 데이터 폴더 생성
           New-Item -ItemType Directory -Force -Path dist\JRGS\ROM_File
