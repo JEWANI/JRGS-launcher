@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'   # v1.0.0 형식 태그 푸시 시 실행
+  workflow_dispatch:
 
 permissions:
   contents: write
