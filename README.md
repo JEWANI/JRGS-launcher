@@ -12,7 +12,13 @@
 | [📦 포터블 버전 (ZIP)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 압축 해제 후 JRGS.exe 실행 |
 | [💿 설치 버전 (EXE)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 인스톨러 실행 후 설치 |
 
-> Windows 10 / 11 (64bit) 전용
+> Windows 10 / 11 (64bit) 전용 · Python 설치 불필요
+
+---
+
+## 📚 사용 설명서
+
+👉 **[GitHub Wiki 사용 설명서](https://github.com/JEWANI/JRGS-launcher/wiki)**
 
 ---
 
@@ -55,14 +61,15 @@
 
 | 기능 | 단축키 |
 |------|--------|
-| ROM 전체 스캔 | Shift+F5 |
-| 현재 탭 스캔 | F5 |
+| 현재 탭 ROM 스캔 | F5 |
+| 전체 ROM 스캔 | Shift+F5 |
 | ROM 개별 추가 | Ctrl+O |
+| 게임 실행 | Enter |
+| 즐겨찾기 추가/제거 | Ctrl+D |
 | 스크린샷 | F12 |
 | 녹화 시작/중지 | Ctrl+R |
-| 즐겨찾기 추가/제거 | Ctrl+D |
-| 게임 실행 | Enter |
 | 아이콘 크기 조절 | Ctrl+Shift+휠 |
+| 전체화면 | Alt+Enter |
 
 ---
 
@@ -72,5 +79,5 @@
 
 ---
 
-📝 블로그: https://blog.naver.com/akrsodhk
+📝 블로그: https://blog.naver.com/akrsodhk/224200144648
 ▶️ 유튜브: https://www.youtube.com/@jewani1004

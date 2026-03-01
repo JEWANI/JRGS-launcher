@@ -375,6 +375,7 @@ class MainWindow(QMainWindow):
         menu_help = menubar.addMenu("도움말")
         menu_help.addAction(self._make_action("버전 정보", self._show_about))
         menu_help.addAction(self._make_action("사용 방법 안내", self._show_help))
+        menu_help.addAction(self._make_action("사용 설명서 (GitHub Wiki)", self._open_wiki))
         menu_help.addSeparator()
         menu_help.addAction(self._make_action("재와니 블로그", self._open_blog))
         menu_help.addAction(self._make_action("유튜브 채널", self._open_youtube))
@@ -613,7 +614,11 @@ class MainWindow(QMainWindow):
 
     def _open_blog(self):
         import webbrowser
-        webbrowser.open(get_setting("blog_url", "https://blog.naver.com/akrsodhk"))
+        webbrowser.open("https://blog.naver.com/akrsodhk/224200144648")
+
+    def _open_wiki(self):
+        import webbrowser
+        webbrowser.open("https://github.com/JEWANI/JRGS-launcher/wiki")
 
     def _show_emulators_about(self):
         from PyQt6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFrame
@@ -677,7 +682,7 @@ class MainWindow(QMainWindow):
             row.setContentsMargins(8, 6, 8, 6)
 
             left = QVBoxLayout()
-            lbl_name = QLabel(info["name"])
+            lbl_name = QLabel(f"{info['name']}  {info['version']}")
             lbl_name.setStyleSheet("font-size: 12px; font-weight: bold;")
             lbl_desc = QLabel(info["desc"])
             lbl_desc.setStyleSheet("font-size: 10px; color: #888899;")
@@ -686,7 +691,7 @@ class MainWindow(QMainWindow):
 
             btn = QPushButton("🔗 공식 홈페이지")
             btn.setFixedHeight(26)
-            btn.setFixedWidth(110)
+            btn.setFixedWidth(130)
             btn.clicked.connect(lambda _, u=info["url"]: webbrowser.open(u))
 
             row.addLayout(left)
@@ -716,6 +721,44 @@ class MainWindow(QMainWindow):
         mort_row.addStretch()
         layout.addLayout(mort_row)
 
+        # 구분선
+        line2 = QFrame()
+        line2.setFrameShape(QFrame.Shape.HLine)
+        layout.addWidget(line2)
+
+        # 폰트 정보
+        FONTS_INFO = [
+            {
+                "name": "SUIT-Medium (수트체)",
+                "url": "https://sun.fo/suit/",
+            },
+            {
+                "name": "AritaDotumKR-Light (아리따돋움체)",
+                "url": "https://www.apgroup.com/int/ko/about-us/visual-identity/arita-typeface/arita-typeface.html",
+            },
+            {
+                "name": "TheCircleM (동그라미체)",
+                "url": "http://www.thecircle.or.kr/kor/data-room/circle-font.html",
+            },
+        ]
+
+        lbl_font_title = QLabel("사용 중인 폰트")
+        lbl_font_title.setStyleSheet("font-size: 13px; font-weight: bold;")
+        layout.addWidget(lbl_font_title)
+
+        for font in FONTS_INFO:
+            font_row = QHBoxLayout()
+            lbl_font = QLabel(font["name"])
+            lbl_font.setStyleSheet("font-size: 11px;")
+            btn_font = QPushButton("🔗 사이트")
+            btn_font.setFixedHeight(30)
+            btn_font.setFixedWidth(80)
+            btn_font.clicked.connect(lambda _, u=font["url"]: webbrowser.open(u))
+            font_row.addWidget(lbl_font)
+            font_row.addStretch()
+            font_row.addWidget(btn_font)
+            layout.addLayout(font_row)
+
         layout.addStretch()
 
         btn_close = QPushButton("닫기")
@@ -730,13 +773,21 @@ class MainWindow(QMainWindow):
         webbrowser.open(get_setting("default_youtube_channel", "https://www.youtube.com/@jewani1004"))
 
     def _show_help(self):
+        import webbrowser
         from PyQt6.QtWidgets import QMessageBox
-        QMessageBox.information(self, "사용 방법",
+        msg = QMessageBox(self)
+        msg.setWindowTitle("사용 방법")
+        msg.setText(
             "1. 에뮬레이터 메뉴에서 에뮬레이터를 등록하세요.\n"
             "2. ROM 파일을 ROM_File 하위 폴더에 넣어주세요.\n"
             "3. F5를 눌러 ROM을 스캔하세요.\n"
             "4. 게임을 선택하고 더블클릭으로 실행하세요.\n\n"
             "자세한 내용은 재와니 블로그를 참고하세요!")
+        btn_blog = msg.addButton("📝 네이버 블로그", QMessageBox.ButtonRole.ActionRole)
+        msg.addButton(QMessageBox.StandardButton.Ok)
+        msg.exec()
+        if msg.clickedButton() == btn_blog:
+            webbrowser.open("https://blog.naver.com/akrsodhk/224200144648")
 
     def _show_about(self):
         from version_dialog import VersionDialog

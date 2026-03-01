@@ -950,6 +950,34 @@ class SettingsDialog(QDialog):
         layout.setContentsMargins(16, 16, 16, 16)
         layout.setSpacing(16)
 
+        # 백업 폴더 설정 그룹
+        group_folder = QGroupBox("백업 기본 폴더")
+        v_folder = QVBoxLayout(group_folder)
+        v_folder.setSpacing(6)
+
+        folder_row = QHBoxLayout()
+        self.edit_backup_folder = QLineEdit()
+        self.edit_backup_folder.setReadOnly(True)
+        self.edit_backup_folder.setPlaceholderText("폴더를 지정하면 기본 저장 위치로 사용됩니다")
+        saved_folder = get_setting("backup_folder", "")
+        self.edit_backup_folder.setText(saved_folder)
+
+        btn_folder = QPushButton("📂 찾아보기")
+        btn_folder.setFixedHeight(28)
+        btn_folder.setFixedWidth(90)
+        btn_folder.clicked.connect(self._pick_backup_folder)
+
+        btn_folder_clear = QPushButton("초기화")
+        btn_folder_clear.setFixedHeight(28)
+        btn_folder_clear.setFixedWidth(60)
+        btn_folder_clear.clicked.connect(self._clear_backup_folder)
+
+        folder_row.addWidget(self.edit_backup_folder)
+        folder_row.addWidget(btn_folder)
+        folder_row.addWidget(btn_folder_clear)
+        v_folder.addLayout(folder_row)
+        layout.addWidget(group_folder)
+
         # 백업 그룹
         group_backup = QGroupBox("백업")
         v_backup = QVBoxLayout(group_backup)
@@ -993,6 +1021,16 @@ class SettingsDialog(QDialog):
         else:
             self.lbl_last_backup.setText("마지막 백업: 없음")
 
+    def _pick_backup_folder(self):
+        folder = QFileDialog.getExistingDirectory(self, "백업 폴더 선택", self.edit_backup_folder.text() or "")
+        if folder:
+            self.edit_backup_folder.setText(folder)
+            set_setting("backup_folder", folder)
+
+    def _clear_backup_folder(self):
+        self.edit_backup_folder.setText("")
+        set_setting("backup_folder", "")
+
     def _do_backup(self):
         import zipfile, datetime
         from PyQt6.QtWidgets import QMessageBox
@@ -1002,8 +1040,11 @@ class SettingsDialog(QDialog):
         now_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         default_name = f"JRGS_backup_{now_str}.jrgs_backup"
 
+        backup_folder = get_setting("backup_folder", "")
+        default_path = str(Path(backup_folder) / default_name) if backup_folder else default_name
+
         save_path, _ = QFileDialog.getSaveFileName(
-            self, "백업 파일 저장", default_name, "JRGS 백업 (*.jrgs_backup)"
+            self, "백업 파일 저장", default_path, "JRGS 백업 (*.jrgs_backup)"
         )
         if not save_path:
             return
