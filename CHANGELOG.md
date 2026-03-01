@@ -3,6 +3,32 @@
 
 ---
 
+##V.1.7.5 — DB 무결성 강화 / 스캔 동기화 개선
+
+2026-03-01
+
+🟢 신규기능
+
+games 참조 테이블에 FOREIGN KEY ON DELETE CASCADE 적용
+(game_meta / play_history / favorites / screenshots)
+
+🟡 업데이트
+
+ROM 스캔 완료 후 현재 탭 자동 새로고침 처리
+(_on_scan_finished → _on_tab_changed 호출 추가)
+
+DB 외래키 무결성 구조 정비 (수동 삭제 로직 제거 준비)
+
+🔴 버그수정
+
+그리드 초기화 시 FOREIGN KEY constraint failed 오류 수정
+
+database is locked 발생 가능성 감소
+
+스캔 완료 후 그리드가 즉시 갱신되지 않던 문제 수정
+
+---
+
 ## V.1.7.4 — DB 관리 / 4종 배포 / 에뮬 경로 수정
 > 2026-03-01
 

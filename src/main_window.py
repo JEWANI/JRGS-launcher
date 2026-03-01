@@ -531,6 +531,7 @@ class MainWindow(QMainWindow):
         msg = f"스캔 완료 - 추가: {added}개, 누락: {missing}개"
         self.status_bar.showMessage(msg, 5000)
         print(f"[스캔] {msg}")
+        self._on_tab_changed(self.tab_bar.currentIndex())
 
     def _open_rom(self):
         from PyQt6.QtWidgets import QFileDialog

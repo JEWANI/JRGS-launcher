@@ -92,7 +92,7 @@ def init_db():
             ocr_enabled         INTEGER DEFAULT 0,
             ocr_mode            TEXT DEFAULT 'screenshot',
             ocr_translate_api   TEXT DEFAULT 'google',
-            FOREIGN KEY (game_id) REFERENCES games(id),
+            FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE,
             FOREIGN KEY (emulator_id) REFERENCES emulators(id)
         )
     """)
@@ -104,7 +104,7 @@ def init_db():
             last_played         DATETIME,
             play_count          INTEGER DEFAULT 0,
             total_playtime_sec  INTEGER DEFAULT 0,
-            FOREIGN KEY (game_id) REFERENCES games(id)
+            FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
         )
     """)
 
@@ -113,7 +113,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS favorites (
             game_id     INTEGER PRIMARY KEY,
             added_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (game_id) REFERENCES games(id)
+            FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
         )
     """)
 
@@ -125,7 +125,7 @@ def init_db():
             file_path   TEXT NOT NULL,
             captured_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             memo        TEXT DEFAULT '',
-            FOREIGN KEY (game_id) REFERENCES games(id)
+            FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
         )
     """)
 

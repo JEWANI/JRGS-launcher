@@ -82,8 +82,8 @@
 | [Mesen](https://www.mesen.ca/) | v2.1.1 | FC, SFC, GB, GBA, PCE, WS | [mesen.ca](https://www.mesen.ca/) | - |
 | [Kega Fusion](https://www.carpeludum.com/kega-fusion/) | v3.64 | MD, MD CD, SMS | [carpeludum.com](https://www.carpeludum.com/kega-fusion/) | [한글패치](https://life-1004.tistory.com/203) |
 | [DeSmuME](https://desmume.org/) | v0.9.13 | NDS | [desmume.org](https://desmume.org/) | [한글패치](https://blog.naver.com/akrsodhk/223318461627) |
-| [blueMSX](http://bluemsx.msxblue.com/) | v2.8.2 | MSX | [bluemsx.msxblue.com](http://bluemsx.msxblue.com/) | [웹 실행](https://romemu.tistory.com/entry/blueMSX) |
-| [Oswan](https://www.zophar.net/ws/oswan.html) | v1.7.3 | WonderSwan | [zophar.net](https://www.zophar.net/ws/oswan.html) | [한글패치](https://blog.naver.com/akrsodhk/224199449847) |
+| [blueMSX](http://bluemsx.msxblue.com/) | v2.8.2 | MSX | [bluemsx.msxblue.com](http://bluemsx.msxblue.com/) | [티스토리](https://romemu.tistory.com/entry/blueMSX) |
+| [Oswan](https://www.zophar.net/ws/oswan.html) | v1.7.3 | WonderSwan | [zophar.net](https://www.zophar.net/ws/oswan.html) | [네이버블로그](https://blog.naver.com/akrsodhk/224199449847) |
 
 ---
 
