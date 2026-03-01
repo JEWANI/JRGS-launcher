@@ -1072,16 +1072,16 @@ def main():
             if families:
                 print(f"[폰트] 로드됨: {families[0]}")
 
+    # DB 및 폴더 초기화 (반드시 get_setting 호출 전에)
+    init_db()
+    init_folders()
+
     # 앱 기본 폰트 설정
     from database import get_setting
     saved_font = get_setting("font", "SUIT-Medium")
     default_font = QFont(saved_font)
     default_font.setPointSize(10)
     app.setFont(default_font)
-
-    # DB 및 폴더 초기화
-    init_db()
-    init_folders()
     from folders import auto_register_mesen, auto_register_fusion, auto_register_desmume, auto_register_oswan, auto_register_bluemsx
     auto_register_mesen()
     auto_register_fusion()
