@@ -51,9 +51,11 @@ jobs:
             Copy-Item -Recurse fonts     "$dist\fonts"     -Force
             Copy-Item -Recurse ICON      "$dist\ICON"      -Force
             Copy-Item -Recurse Emulators "$dist\Emulators" -Force
-            Get-ChildItem -Path "$dist\Emulators" -Recurse | Where-Object { $_.Extension -eq '.zip' } | ForEach-Object {
+            Get-ChildItem -Path "$dist\Emulators" -Recurse -File | Where-Object { $_.Extension -eq '.zip' } | ForEach-Object {
               Expand-Archive -Path $_.FullName -DestinationPath $_.DirectoryName -Force
               Remove-Item $_.FullName
+            }
+            Get-ChildItem -Path "$dist\Emulators" -Recurse -File | Where-Object { $_.Extension -eq '.7z' } | Remove-Item -Force
             }
             Get-ChildItem -Path "$dist\Emulators" -Recurse | Where-Object { $_.Extension -eq '.7z' } | Remove-Item -Force
             New-Item -ItemType Directory -Force -Path "$dist\ROM_File"
