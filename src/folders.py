@@ -30,7 +30,13 @@ PLATFORM_FOLDERS = {
 
 def get_base_path():
     """JRGS 루트 폴더 경로"""
-    return Path(__file__).resolve().parent.parent
+    import sys
+    if getattr(sys, 'frozen', False):
+        # PyInstaller 빌드 환경: EXE 파일 위치 기준
+        return Path(sys.executable).resolve().parent
+    else:
+        # 개발 환경: src/ 의 상위 폴더
+        return Path(__file__).resolve().parent.parent
 
 
 def get_rom_root():
