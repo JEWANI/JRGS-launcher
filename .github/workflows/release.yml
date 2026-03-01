@@ -56,8 +56,6 @@ jobs:
               Remove-Item $_.FullName
             }
             Get-ChildItem -Path "$dist\Emulators" -Recurse -File | Where-Object { $_.Extension -eq '.7z' } | Remove-Item -Force
-            }
-            Get-ChildItem -Path "$dist\Emulators" -Recurse | Where-Object { $_.Extension -eq '.7z' } | Remove-Item -Force
             New-Item -ItemType Directory -Force -Path "$dist\ROM_File"
             New-Item -ItemType Directory -Force -Path "$dist\GameData"
             New-Item -ItemType Directory -Force -Path "$dist\Screenshots"

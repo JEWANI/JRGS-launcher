@@ -75,10 +75,31 @@
 
 ---
 
+## 🕹️ 포함된 에뮬레이터
+
+| 에뮬레이터 | 버전 | 지원 플랫폼 | 공식 사이트 | 한글 패치 / 다운로드 |
+|-----------|------|------------|------------|-------------------|
+| [Mesen](https://www.mesen.ca/) | v2.1.1 | FC, SFC, GB, GBA, PCE, WS | [mesen.ca](https://www.mesen.ca/) | - |
+| [Kega Fusion](https://www.carpeludum.com/kega-fusion/) | v3.64 | MD, MD CD, SMS | [carpeludum.com](https://www.carpeludum.com/kega-fusion/) | [한글패치](https://life-1004.tistory.com/203) |
+| [DeSmuME](https://desmume.org/) | v0.9.13 | NDS | [desmume.org](https://desmume.org/) | [한글패치](https://blog.naver.com/akrsodhk/223318461627) |
+| [blueMSX](http://bluemsx.msxblue.com/) | v2.8.2 | MSX | [bluemsx.msxblue.com](http://bluemsx.msxblue.com/) | [웹 실행](https://romemu.tistory.com/entry/blueMSX) |
+| [Oswan](https://www.zophar.net/ws/oswan.html) | v1.7.3 | WonderSwan | [zophar.net](https://www.zophar.net/ws/oswan.html) | [한글패치](https://blog.naver.com/akrsodhk/224199449847) |
+
+---
+
+## 🔤 사용된 폰트
+
+| 폰트 | 제작 | 라이선스 |
+|------|------|---------|
+| [SUIT (수트체)](https://sun.fo/suit/) | sun-typeface | SIL OFL (무료/상업 사용 가능) |
+| [아리따돋움 (AritaDotum)](https://design.amorepacific.com/arita/) | 아모레퍼시픽 | 무료 배포 (저작권 표기 필요) |
+| [더 써클 M (TheCircleM)](https://noonnu.cc/font_page/75) | 동그라미재단 | 무료 배포 |
+
+---
+
 ## 📋 업데이트 내역
 
 [CHANGELOG.md](./CHANGELOG.md) 참고
-
 ---
 
 📝 블로그: https://blog.naver.com/akrsodhk/224200144648
