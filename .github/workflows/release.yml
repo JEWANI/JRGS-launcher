@@ -52,7 +52,7 @@ jobs:
             Copy-Item -Recurse ICON      "$dist\ICON"      -Force
             Copy-Item -Recurse Emulators "$dist\Emulators" -Force
             Get-ChildItem -Path "$dist\Emulators" -Recurse -File | Where-Object { $_.Extension -eq '.zip' } | ForEach-Object {
-              Expand-Archive -Path $_.FullName -DestinationPath $_.DirectoryName -Force
+              Expand-Archive -Path $_.FullName -DestinationPath $_.Directory.FullName -Force
               Remove-Item $_.FullName
             }
             Get-ChildItem -Path "$dist\Emulators" -Recurse -File | Where-Object { $_.Extension -eq '.7z' } | Remove-Item -Force
