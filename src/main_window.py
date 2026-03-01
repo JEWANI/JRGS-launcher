@@ -367,7 +367,7 @@ class MainWindow(QMainWindow):
         menu_tools.addAction(self._make_action("스크린샷 설정", self._open_screenshot_settings))
         menu_tools.addAction(self._make_action("녹화 폴더 열기", self._open_record_folder))
         menu_tools.addSeparator()
-        menu_tools.addAction(self._make_action("DB 관리"))
+        menu_tools.addAction(self._make_action("DB 관리", self._open_db_manager))
         menu_tools.addAction(self._make_action("메타데이터 일괄 갱신", self._batch_update_metadata))
         menu_tools.addAction(self._make_action("플레이 기록 통계", self._show_stats))
 
@@ -564,6 +564,12 @@ class MainWindow(QMainWindow):
             w = int(get_setting("window_width", "1280"))
             h = int(get_setting("window_height", "800"))
             self.resize(w, h)
+
+    def _open_db_manager(self):
+        from db_manage_dialog import DBManageDialog
+        from theme import get_current_theme
+        dlg = DBManageDialog(self, theme=get_current_theme())
+        dlg.exec()
 
     def _open_screenshot_settings(self):
         from screenshot_dialog import ScreenshotSettingsDialog

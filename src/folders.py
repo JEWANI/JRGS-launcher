@@ -94,7 +94,7 @@ def init_folders():
     (base / "Emulators" / "Fusion").mkdir(exist_ok=True)
     (base / "Emulators" / "DeSmuME").mkdir(exist_ok=True)
     (base / "Emulators" / "Oswan").mkdir(exist_ok=True)
-    (base / "Emulators" / "blueMSX").mkdir(exist_ok=True)
+    (base / "Emulators" / "MSX").mkdir(exist_ok=True)
 
     # 플랫폼 기본 아이콘 폴더 생성
     (base / "ICON").mkdir(exist_ok=True)
@@ -426,8 +426,8 @@ def auto_register_oswan():
 
 
 def auto_register_bluemsx():
-    """blueMSX 에뮬레이터 자동 등록 (Emulators/blueMSX/blueMSX.exe 존재 시)"""
-    exe = get_base_path() / "Emulators" / "blueMSX" / "blueMSX.exe"
+    """blueMSX 에뮬레이터 자동 등록 (Emulators/MSX/blueMSX.exe 존재 시)"""
+    exe = get_base_path() / "Emulators" / "MSX" / "blueMSX.exe"
     if not exe.exists():
         return
 

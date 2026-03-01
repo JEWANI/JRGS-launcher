@@ -23,40 +23,49 @@ jobs:
         with:
           python-version: '3.11'
 
-      # 3. 의존성 설치
+      # 3. 의존성 설치 (일반)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pyinstaller
 
-      # 4. PyInstaller 빌드
+      # 4. PyInstaller 빌드 (일반)
       - name: Build with PyInstaller
         run: pyinstaller JRGS.spec --noconfirm
 
-      # 5. 포터블 ZIP 생성
-      - name: Create portable ZIP
+      # 4-1. 최소 버전 의존성 설치 및 빌드
+      - name: Install lite dependencies & build
         run: |
-          # 포함 폴더 복사
-          Copy-Item -Recurse fonts     dist\JRGS\fonts     -Force
-          Copy-Item -Recurse ICON      dist\JRGS\ICON      -Force
-          Copy-Item -Recurse Emulators dist\JRGS\Emulators -Force
+          pip uninstall PyQt6-WebEngine PyQt6-WebEngineCore PyQt6-WebEngineWidgets -y
+          pip install -r requirements_lite.txt
+          pyinstaller JRGS_lite.spec --noconfirm
 
-          # Emulators 폴더 내 ZIP 파일 자동 압축 해제 후 삭제
-          Get-ChildItem -Path dist\JRGS\Emulators -Recurse -Filter *.zip | ForEach-Object {
-            Expand-Archive -Path $_.FullName -DestinationPath $_.DirectoryName -Force
-            Remove-Item $_.FullName
+      # 5. 포터블 ZIP 생성 (일반 + 최소)
+      - name: Create portable ZIPs
+        run: |
+          $tag = "${{ github.ref_name }}"
+
+          # 공통 폴더 복사 함수
+          function Copy-Common($dist) {
+            Copy-Item -Recurse fonts     "$dist\fonts"     -Force
+            Copy-Item -Recurse ICON      "$dist\ICON"      -Force
+            Copy-Item -Recurse Emulators "$dist\Emulators" -Force
+            Get-ChildItem -Path "$dist\Emulators" -Recurse -Filter *.zip | ForEach-Object {
+              Expand-Archive -Path $_.FullName -DestinationPath $_.DirectoryName -Force
+              Remove-Item $_.FullName
+            }
+            New-Item -ItemType Directory -Force -Path "$dist\ROM_File"
+            New-Item -ItemType Directory -Force -Path "$dist\GameData"
+            New-Item -ItemType Directory -Force -Path "$dist\Screenshots"
+            New-Item -ItemType Directory -Force -Path "$dist\Records"
           }
 
-          # 사용자 데이터 폴더 생성
-          New-Item -ItemType Directory -Force -Path dist\JRGS\ROM_File
-          New-Item -ItemType Directory -Force -Path dist\JRGS\GameData
-          New-Item -ItemType Directory -Force -Path dist\JRGS\Screenshots
-          New-Item -ItemType Directory -Force -Path dist\JRGS\Records
-
-          # ZIP 압축
-          $tag = "${{ github.ref_name }}"
+          Copy-Common "dist\JRGS"
           Compress-Archive -Path dist\JRGS\* -DestinationPath "JRGS_${tag}_portable.zip"
+
+          Copy-Common "dist\JRGS_lite"
+          Compress-Archive -Path dist\JRGS_lite\* -DestinationPath "JRGS_${tag}_lite_portable.zip"
         shell: pwsh
 
       # 6. Inno Setup 설치
@@ -64,16 +73,23 @@ jobs:
         run: choco install innosetup --yes
         shell: pwsh
 
-      # 7. 인스톨러 빌드
+      # 7. 인스톨러 빌드 (일반 + 최소)
       - name: Build installer
         run: |
           $tag = "${{ github.ref_name }}"
-          # installer.iss의 OutputBaseFilename에 버전 반영
-          (Get-Content installer.iss) -replace 'MyAppVersion   "1.0.0"', "MyAppVersion   `"${tag.TrimStart('v')}`"" | Set-Content installer.iss
+          $ver = $tag.TrimStart('v')
+
+          # 일반 버전
+          (Get-Content installer.iss) -replace 'MyAppVersion   "1.0.0"', "MyAppVersion   `"$ver`"" | Set-Content installer.iss
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
-          # output 폴더에서 최종 파일명 변경
           $setupFile = Get-ChildItem output\*.exe | Select-Object -First 1
           Rename-Item $setupFile.FullName "JRGS_${tag}_setup.exe"
+
+          # 최소 버전
+          (Get-Content installer_lite.iss) -replace 'MyAppVersion   "1.0.0"', "MyAppVersion   `"$ver`"" | Set-Content installer_lite.iss
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer_lite.iss
+          $setupFile = Get-ChildItem output\*_lite_setup*.exe | Select-Object -First 1
+          Rename-Item $setupFile.FullName "JRGS_${tag}_lite_setup.exe"
         shell: pwsh
 
       # 8. GitHub Releases에 업로드
@@ -87,13 +103,17 @@ jobs:
             ### 다운로드
             | 파일 | 설명 |
             |------|------|
-            | `JRGS_${{ github.ref_name }}_portable.zip` | 포터블 버전 — 압축 해제 후 바로 실행 |
-            | `JRGS_${{ github.ref_name }}_setup.exe` | 설치 버전 — 인스톨러 실행 |
+            | `JRGS_${{ github.ref_name }}_portable.zip` | 일반 포터블 — 유튜브 인앱 재생 지원 |
+            | `JRGS_${{ github.ref_name }}_setup.exe` | 일반 설치 버전 — 유튜브 인앱 재생 지원 |
+            | `JRGS_${{ github.ref_name }}_lite_portable.zip` | 최소 포터블 — 용량 절감 버전 |
+            | `JRGS_${{ github.ref_name }}_lite_setup.exe` | 최소 설치 버전 — 용량 절감 버전 |
 
             ### 변경 사항
             CHANGELOG.md를 참고해주세요.
           files: |
             JRGS_${{ github.ref_name }}_portable.zip
+            JRGS_${{ github.ref_name }}_lite_portable.zip
             output/JRGS_${{ github.ref_name }}_setup.exe
+            output/JRGS_${{ github.ref_name }}_lite_setup.exe
           draft: false
           prerelease: false

@@ -11,6 +11,8 @@
 |------|------|
 | [📦 포터블 버전 (ZIP)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 압축 해제 후 JRGS.exe 실행 |
 | [💿 설치 버전 (EXE)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 인스톨러 실행 후 설치 |
+| [📦 포터블 최소 버전 (ZIP)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 용량 절감 버전 (유튜브 인앱 재생 미지원) |
+| [💿 설치 최소 버전 (EXE)](https://github.com/JEWANI/JRGS-launcher/releases/latest) | 용량 절감 설치 버전 |
 
 > Windows 10 / 11 (64bit) 전용 · Python 설치 불필요
 
